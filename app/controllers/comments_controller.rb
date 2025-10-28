@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     @comment   = @prototype.comments.build(comment_params.merge(user: current_user))
 
     if @comment.save
-      redirect_to prototype_path(@prototype), notice: "コメントを投稿しました。"
+      redirect_to prototype_path(@prototype),
     else
       # 失敗時に再表示に必要な変数を用意
       @comments = @prototype.comments.order(:created_at)
