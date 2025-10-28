@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
-  validates :text, presence: true
+  validates :text, :content, presence: true
   belongs_to :user
   belongs_to :prototype
+
 end
