@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     @comment   = @prototype.comments.build(comment_params.merge(user: current_user))
 
     if @comment.save
-      redirect_to prototype_path(@prototype),
+      redirect_to prototype_path(@prototype)
     else
       # 失敗時に再表示に必要な変数を用意
       @comments = @prototype.comments.order(:created_at)
@@ -17,6 +17,6 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:content)  # ←列名が :text の場合は :text に変更
+    params.require(:comment).permit(:text)  # ←列名が :text の場合は :text に変更
   end
 end
