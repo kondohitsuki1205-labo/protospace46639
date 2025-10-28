@@ -31,37 +31,36 @@
       </div>
       <div class="prototype__comments">
   <% if user_signed_in? %>
-    <% if @comment.errors.any? %>
-      <div class="errors">
-        <ul>
-          <% @comment.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <%= form_with model: [@prototype, @comment], local: true do |f| %>
-      <div class="field">
-        <%= f.label :text, "comment" %><br />
-        <%= f.text_field :text, id: "comment_text" %>
-      </div>
-      <div class="actions">
-        <%= f.submit "送信する", class: :form__btn %>
-      </div>
-    <% end %>
-  <% else %>
-    <p>コメントするにはログインしてください。</p>
+  <% if @comment.errors.any? %>
+    <div class="errors">
+      <ul>
+        <% @comment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
 
-  <ul class="comments_lists">
-    <% @comments.each do |comment| %>
-      <li class="comments_list">
-        <%= comment.text %>
-        <%= link_to "(#{comment.user.name})", user_path(comment.user), class: :comment_user %>
-      </li>
-    <% end %>
-  </ul>
+  <%= form_with model: [@prototype, @comment], local: true do |f| %>
+    <div class="field">
+      <%= f.label :content, "comment" %><br>
+      <%= f.text_area :content, id: "comment_content", rows: 4 %>  <!-- ← content -->
+    </div>
+    <div class="actions">
+      <%= f.submit "送信する", class: :form__btn %>
+    </div>
+  <% end %>
+<% else %>
+<% end %>
+
+<ul class="comments_lists">
+  <% @comments.each do |comment| %>
+    <li class="comments_list">
+      <%= h(comment.content) %>   <!-- ← content -->
+      <%= link_to "(#{comment.user.name})", user_path(comment.user), class: :comment_user %>
+    </li>
+  <% end %>
+</ul>
   </div>
  </div>
 </main>

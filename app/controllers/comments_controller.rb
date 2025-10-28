@@ -17,6 +17,6 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:text)  # ←列名が :text の場合は :text に変更
+    params.require(:comment).permit(:content)  # ←列名が :text の場合は :text に変更
   end
 end
