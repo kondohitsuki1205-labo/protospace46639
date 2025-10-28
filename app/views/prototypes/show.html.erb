@@ -50,13 +50,12 @@
       <%= f.submit "送信する", class: :form__btn %>
     </div>
   <% end %>
-<% else %>
 <% end %>
 
 <ul class="comments_lists">
   <% @comments.each do |comment| %>
     <li class="comments_list">
-      <%= h(comment.content) %>   <!-- ← content -->
+      <%= h(comment.content) %>
       <%= link_to "(#{comment.user.name})", user_path(comment.user), class: :comment_user %>
     </li>
   <% end %>
