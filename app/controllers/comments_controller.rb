@@ -1,20 +1,22 @@
 class CommentsController < ApplicationController
- def create
-  @comment = Comment.new(comment_params)
-   if @comment.save
-    redirect_to prototype_path(@comment.prototype)
-   else
-    @prototype = @comment.prototype
-    @comments = @prototype.comments
-    render "prototypes/show", status: :unprocessable_entity
-   end
+ before_action :authenticate_user!
+
+  def create
+    @prototype = Prototype.find(params[:prototype_id])
+    @comment   = @prototype.comments.build(comment_params.merge(user: current_user))
+
+    if @comment.save
+      redirect_to prototype_path(@prototype), notice: "コメントを投稿しました。"
+    else
+      # 失敗時に再表示に必要な変数を用意
+      @comments = @prototype.comments.order(:created_at)
+      render "prototypes/show", status: :unprocessable_entity
+    end
   end
 
   private
 
-   def comment_params
-   params.require(:comment)
-         .permit(:content)
-         .merge(user_id: current_user.id, prototype_id: params[:prototype_id])
-   end
+  def comment_params
+    params.require(:comment).permit(:content)  # ←列名が :text の場合は :text に変更
   end
+end
